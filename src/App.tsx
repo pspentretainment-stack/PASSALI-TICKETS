@@ -295,13 +295,13 @@ function App() {
                     <div className="event-bottom">
                       <strong>{event.price}</strong>
 
-                      <button onClick={() => setSelectedEvent(event)}
-                        Ver evento <ArrowRight size={15} />
-                      </button>
+                     <button onClick={() => setSelectedEvent(event)}>
+    Ver evento <ArrowRight size={15} />
+</button>
                     </div>
                   </div>
                 </article>
-                     ))}
+))}
             </div>
           ) : (
             <div className="empty-state">
