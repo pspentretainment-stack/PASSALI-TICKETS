@@ -1,0 +1,38 @@
+
+name: Publish PASSALI TICKETS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get private repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build website
+        run: npm run build
+
+      - name: Publish to public repository
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PASSALI_DEPLOY_TOKEN }}
+          external_repository: pspentertainment-stack/PASSALI-TICKETS-WEB
+          publish_branch: main
+          publish_dir: ./dist
