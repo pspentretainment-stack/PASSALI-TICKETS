@@ -301,14 +301,14 @@ function App() {
                     </div>
                   </div>
                 </article>
-              ))}
+                     ))}
             </div>
           ) : (
             <div className="empty-state">
               Não encontrámos eventos com estes critérios.
               Experimenta outra pesquisa.
             </div>
-          )}
+      )}
         </section>
 
         <section className="organizer-banner" id="organizadores">
