@@ -1,5 +1,4 @@
-
-name: Publish PASSALI TICKETS
+name: Deploy PASSALI TICKETS
 
 on:
   push:
@@ -9,13 +8,18 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Get private repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -29,10 +33,18 @@ jobs:
       - name: Build website
         run: npm run build
 
-      - name: Publish to public repository
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
         with:
-          personal_token: ${{ secrets.PASSALI_DEPLOY_TOKEN }}
-          external_repository: pspentertainment-stack/PASSALI-TICKETS-WEB
-          publish_branch: main
-          publish_dir: ./dist
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
