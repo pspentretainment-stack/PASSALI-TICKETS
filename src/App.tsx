@@ -65,6 +65,7 @@ function App() {
   const [country, setCountry] = useState("Todos os destinos");
   const [menuOpen, setMenuOpen] = useState(false);
   const [notice, setNotice] = useState("");
+  const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
   const filteredEvents = useMemo(() => events.filter((event) => {
     const matchesQuery =
@@ -294,7 +295,7 @@ function App() {
                     <div className="event-bottom">
                       <strong>{event.price}</strong>
 
-                      <button onClick={showDemoNotice}>
+                      <button onClick={() => setSelectedEvent(event)}
                         Ver evento <ArrowRight size={15} />
                       </button>
                     </div>
