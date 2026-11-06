@@ -357,7 +357,49 @@ function App() {
           © 2026 Passali Tickets. Todos os direitos reservados.
         </span>
       </footer>
+      {selectedEvent && (
+        <div className="event-modal-overlay" onClick={() => setSelectedEvent(null)}>
+          <div className="event-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="event-modal-close"
+              onClick={() => setSelectedEvent(null)}
+            >
+              <X size={22} />
+            </button>
 
+            <div
+              className="event-modal-image"
+              style={{ backgroundImage: `url(${selectedEvent.image})` }}
+            />
+
+            <div className="event-modal-content">
+              <span className="event-category">
+                {selectedEvent.category}
+              </span>
+
+              <h2>{selectedEvent.title}</h2>
+
+              <div className="event-meta">
+                <span>
+                  <CalendarDays size={15} />
+                  {selectedEvent.date}
+                </span>
+                <span>
+                  <MapPin size={15} />
+                  {selectedEvent.city}, {selectedEvent.country}
+                </span>
+              </div>
+
+              <div className="event-modal-bottom">
+                <strong>{selectedEvent.price}</strong>
+                <button onClick={showDemoNotice}>
+                  Bilhetes em breve <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {notice && (
         <div className="toast" role="status">
           <span>{notice}</span>
